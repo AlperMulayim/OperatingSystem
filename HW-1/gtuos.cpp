@@ -34,15 +34,17 @@ void GTUOS::PRINT_B(const CPU8080 &cpu) {
 //if state a == 2 BC == adress
 void GTUOS::PRINT_MEM(const CPU8080 &cpu) {
 	uint16_t adress;
-	//printf("%d",cpu.state->b);
-	adress = (cpu.state->b) << 4;
-	adress += (cpu.state->c);
-	//printf("%" PRIu16 "\n",adress); adress
-	printf("%d\t",cpu.memory[adress]);
+	//printf("B : %d  ",cpu.state->b);
+	//printf("C : %d   \n",cpu.state->c );
+	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
+	//printf("ADDR : %d \t ",adress);
+	int res =(int) cpu.memory[adress];
+	printf("%d\n",res);
 }
+
 //if state a == 3 read int to regB
 void GTUOS::READ_B(const CPU8080 &cpu) {
-	uint8_t breg;
+	int breg;
 	cin>>breg;
 	cpu.state->b = breg;
 }
@@ -50,12 +52,14 @@ void GTUOS::READ_B(const CPU8080 &cpu) {
 //if state a == 4 read int from keyboard
 //puts the int to BC pointed memory loc.
 void GTUOS::READ_MEM(const CPU8080 &cpu) {
-	 uint16_t  adress;
-	 uint8_t  inputNumber;
+	 uint16_t  adress =0;
+	 int  inputNumber;
+	//printf("B : %d  ",cpu.state->b);
+	//printf("C : %d   \n",cpu.state->c );
 
-	adress = (cpu.state->b) <<4;
-	adress += cpu.state->c;
+	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 
+	//printf("ADDR : %d",adress);
 	cin>>inputNumber;
 
 	cpu.memory[adress] = inputNumber;
