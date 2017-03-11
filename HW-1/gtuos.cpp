@@ -31,10 +31,8 @@ uint64_t GTUOS::handleCall(const CPU8080 & cpu){
 
 void GTUOS::PRINT_B(const CPU8080 &cpu) {
 
-	//cout <<"HELLOOO " << cpu.state->b<<"    ALPER";
-	if(cpu.state->a == 1) {
-		printf("%d\n", cpu.state->b);
-	}
+	printf("System Call :PRINT_B\n");
+    printf("Value of B : %d\n", cpu.state->b);
 }
 
 //if state a == 2 BC == adress
@@ -45,14 +43,18 @@ void GTUOS::PRINT_MEM(const CPU8080 &cpu) {
 	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 	//printf("ADDR : %d \t ",adress);
 	int res =(int) cpu.memory[adress];
-	printf("%d\n",res);
+    printf("System Call :PRINT_MEM\n");
+    printf("Value of Memory : %d\n",res);
 }
 
 //if state a == 3 read int to regB
 void GTUOS::READ_B(const CPU8080 &cpu) {
 	int breg;
+    printf("System Call :READ_B\n");
+    printf("B reg value >>  ");
 	cin>>breg;
 	cpu.state->b = breg;
+
 }
 
 //if state a == 4 read int from keyboard
@@ -66,6 +68,8 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
 	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 
 	//printf("ADDR : %d",adress);
+    printf("System Call :READ_MEM\n");
+    printf("Memory Value >> ");
 	cin>>inputNumber;
 
 	cpu.memory[adress] = inputNumber;
@@ -76,6 +80,8 @@ void GTUOS::PRINT_STR(const CPU8080 &cpu) {
 	uint16_t  adress =0;
 	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 
+    printf("System Call :PRINT_STR\n");
+    printf("Value of String  : ");
 	while(cpu.memory[adress] != '\0'){
 		printf("%c",cpu.memory[adress]);
 		++adress;
@@ -88,6 +94,10 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 
     adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
     string inputStr;
+
+    printf("System Call : READ_STR\n");
+    printf("String Value >>");
+
 	getline(cin,inputStr);
 
     for(int i= 0 ; i < inputStr.size(); ++i){
