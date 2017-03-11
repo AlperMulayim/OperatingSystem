@@ -19,6 +19,12 @@ uint64_t GTUOS::handleCall(const CPU8080 & cpu){
 	else if(cpu.state->a == 4){
 		READ_MEM(cpu);
 	}
+	else if(cpu.state->a == 5){
+		PRINT_STR(cpu);
+	}
+    else if(cpu.state->a == 6){
+        READ_STR(cpu);
+    }
 
 	return 0;
 }
@@ -65,6 +71,29 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
 	cpu.memory[adress] = inputNumber;
 }
 
+//prints the str in memory address until \0
+void GTUOS::PRINT_STR(const CPU8080 &cpu) {
+	uint16_t  adress =0;
+	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
+
+	while(cpu.memory[adress] != '\0'){
+		printf("%c",cpu.memory[adress]);
+		++adress;
+	}
+	printf("\n");
+}
+
+void GTUOS::READ_STR(const CPU8080 &cpu) {
+	uint16_t  adress =0;
+
+    adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
+    string inputStr;
+	getline(cin,inputStr);
+
+    for(int i= 0 ; i < inputStr.size(); ++i){
+        cpu.memory[adress + i ] = inputStr[i];
+    }
+}
 
 
 
