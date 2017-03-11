@@ -1,6 +1,6 @@
 #ifndef H_GTUOS
 #define H_GTUOS
-
+#include <fstream>
 #include "8080emuCPP.h"
 
 
@@ -13,6 +13,7 @@ class GTUOS{
         void READ_MEM(const CPU8080 &cpu);
         void PRINT_STR(const CPU8080 &cpu);
         void READ_STR(const CPU8080 &cpu);
+        bool saveMemoryToFile(const CPU8080 &cpu);
 };
 
 #endif

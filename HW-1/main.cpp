@@ -3,6 +3,7 @@
 #include "gtuos.h"
 
 using namespace std;
+
 int main (int argc, char**argv)
 {
 	if (argc != 3){
@@ -22,6 +23,8 @@ int main (int argc, char**argv)
             if (theCPU.isSystemCall())
                 theOS.handleCall(theCPU);
         } while (!theCPU.isHalted());
+
+        theOS.saveMemoryToFile(theCPU);
     }
     else if(DEBUG == 1){
         do {
@@ -30,6 +33,7 @@ int main (int argc, char**argv)
                 theOS.handleCall(theCPU);
         } while (!theCPU.isHalted());
 
+        theOS.saveMemoryToFile(theCPU);
     }else if(DEBUG == 2){
         do { //press enter for debug mod
             theCPU.Emulate8080p(DEBUG);
@@ -43,4 +47,5 @@ int main (int argc, char**argv)
 
 	return 0;
 }
+
 

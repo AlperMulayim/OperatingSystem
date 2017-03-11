@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cinttypes>
+#include <fstream>
 #include "8080emuCPP.h"
 #include "gtuos.h"
 
@@ -104,6 +105,35 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
         cpu.memory[adress + i ] = inputStr[i];
     }
 }
+
+bool GTUOS::saveMemoryToFile(const CPU8080 &cpu) {
+   /* ofstream outStream;
+
+    outStream.open("memoryOut.txt");
+    if(outStream.fail()){
+        cerr <<"Output File can not open"<<endl;
+        exit(1);
+    }
+
+    for(int i = 0 ; i< 10000; ++i){
+        outStream <<"i: "<< i << "\t" <<"M: " <<cpu.memory[i]<<endl;
+    }
+
+    outStream.close();
+
+    */
+
+    FILE *filep;
+
+    filep = fopen("memoryOut.txt","w");
+
+    for(int i = 0; i< 10000; ++i){
+        fprintf(filep,"%d\t%d\n",i,cpu.memory[i]);
+    }
+
+    fclose(filep);
+}
+
 
 
 
