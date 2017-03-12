@@ -14,6 +14,10 @@ class GTUOS{
         void PRINT_STR(const CPU8080 &cpu);
         void READ_STR(const CPU8080 &cpu);
         bool saveMemoryToFile(const CPU8080 &cpu);
+        int getNumOfSystemCalls();
+
+private:
+    int cycleOfSystemCall = 0;
 };
 
 #endif
