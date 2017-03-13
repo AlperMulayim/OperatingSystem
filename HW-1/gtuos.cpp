@@ -34,6 +34,7 @@ void GTUOS::PRINT_B(const CPU8080 &cpu) {
 
 	printf("System Call :PRINT_B\n");
     printf("Value of B : %d\n", cpu.state->b);
+    cycleOfSystemCall +=10;
 }
 
 //if state a == 2 BC == adress
@@ -46,6 +47,9 @@ void GTUOS::PRINT_MEM(const CPU8080 &cpu) {
 	int res =(int) cpu.memory[adress];
     printf("System Call :PRINT_MEM\n");
     printf("Value of Memory : %d\n",res);
+
+    cycleOfSystemCall +=10;
+
 }
 
 //if state a == 3 read int to regB
@@ -56,6 +60,7 @@ void GTUOS::READ_B(const CPU8080 &cpu) {
 	cin>>breg;
 	cpu.state->b = breg;
 
+    cycleOfSystemCall +=10;
 }
 
 //if state a == 4 read int from keyboard
@@ -74,6 +79,8 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
 	cin>>inputNumber;
 
 	cpu.memory[adress] = inputNumber;
+
+    cycleOfSystemCall +=10;
 }
 
 //prints the str in memory address until \0
@@ -88,6 +95,8 @@ void GTUOS::PRINT_STR(const CPU8080 &cpu) {
 		++adress;
 	}
 	printf("\n");
+
+    cycleOfSystemCall +=100;
 }
 
 void GTUOS::READ_STR(const CPU8080 &cpu) {
@@ -104,6 +113,8 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
     for(int i= 0 ; i < inputStr.size(); ++i){
         cpu.memory[adress + i ] = inputStr[i];
     }
+
+    cycleOfSystemCall +=100;
 }
 
 bool GTUOS::saveMemoryToFile(const CPU8080 &cpu) {
@@ -132,6 +143,10 @@ bool GTUOS::saveMemoryToFile(const CPU8080 &cpu) {
     }
 
     fclose(filep);
+}
+
+int GTUOS::getNumOfSystemCalls() {
+    return  cycleOfSystemCall;
 }
 
 
