@@ -42,12 +42,13 @@ GTU_OS:	PUSH D
 
 begin:
 	LXI SP,stack 	; always initialize the stack pointer
-    mvi b, 50	; init C with 10
-	mvi a, 0	; A = 0
+    mvi b, 100	; init C with 10
+	mvi c, 51	; A = 0
 loop:
 	mvi a, PRINT_B
 	call GTU_OS
 	dcr b
+	dcr c
 	jnz loop
 	hlt
 	
