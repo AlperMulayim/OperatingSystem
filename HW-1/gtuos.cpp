@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cinttypes>
 #include <fstream>
+#include <limits>
 #include "8080emuCPP.h"
 #include "gtuos.h"
 
@@ -107,9 +108,8 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 
     printf("System Call : READ_STR\n");
     printf("String Value >>");
-
-	getline(cin,inputStr);
-
+    cin.ignore();
+    getline(cin,inputStr,'\n');
     for(int i= 0 ; i < inputStr.size(); ++i){
         cpu.memory[adress + i ] = inputStr[i];
     }
@@ -117,32 +117,21 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
     cycleOfSystemCall +=100;
 }
 
-bool GTUOS::saveMemoryToFile(const CPU8080 &cpu) {
-   /* ofstream outStream;
-
-    outStream.open("memoryOut.txt");
-    if(outStream.fail()){
-        cerr <<"Output File can not open"<<endl;
-        exit(1);
-    }
-
-    for(int i = 0 ; i< 10000; ++i){
-        outStream <<"i: "<< i << "\t" <<"M: " <<cpu.memory[i]<<endl;
-    }
-
-    outStream.close();
-
-    */
+bool GTUOS::saveMemoryToFile(string filename,const CPU8080 &cpu) {
 
     FILE *filep;
+    string alpstr = filename;
+    string aaa = ".mem.txt";
+    string a =  alpstr.replace(alpstr.begin()+ alpstr.find(".") ,alpstr.end(),aaa);
 
-    filep = fopen("memoryOut.txt","w");
+    filep = fopen(a.c_str(),"w");
 
     for(int i = 0; i< 10000; ++i){
-        fprintf(filep,"%d\t%d\n",i,cpu.memory[i]);
+        fprintf(filep,"%04x\t%04x\n",i,cpu.memory[i]);
     }
 
     fclose(filep);
+
 }
 
 int GTUOS::getNumOfSystemCalls() {

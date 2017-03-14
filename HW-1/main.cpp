@@ -27,8 +27,8 @@ int main (int argc, char**argv)
 
         printf("Cycle of System Calls : %d\n",theOS.getNumOfSystemCalls());
         printf("Emulator Cycle : %d\n",emulatorCycle);
-        printf("Total Cycle : %d",emulatorCycle + theOS.getNumOfSystemCalls());
-        theOS.saveMemoryToFile(theCPU);
+        printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
+        theOS.saveMemoryToFile(argv[1],theCPU);
     }
     else if(DEBUG == 1){
         do {
@@ -39,8 +39,8 @@ int main (int argc, char**argv)
 
         printf("Cycle of System Calls : %d\n",theOS.getNumOfSystemCalls());
         printf("Emulator Cycle : %d\n",emulatorCycle);
-        printf("Total Cycle : %d",emulatorCycle + theOS.getNumOfSystemCalls());
-        theOS.saveMemoryToFile(theCPU);
+        printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
+        theOS.saveMemoryToFile(argv[1],theCPU);
 
     }else if(DEBUG == 2){
         do { //press enter for debug mod
@@ -53,7 +53,7 @@ int main (int argc, char**argv)
         } while (!theCPU.isHalted());
         printf("Cycle of System Calls : %d\n",theOS.getNumOfSystemCalls());
         printf("Emulator Cycle : %d\n",emulatorCycle);
-        printf("Total Cycle : %d",emulatorCycle + theOS.getNumOfSystemCalls());
+        printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
     }
 
 	return 0;
