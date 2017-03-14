@@ -120,11 +120,11 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 bool GTUOS::saveMemoryToFile(string filename,const CPU8080 &cpu) {
 
     FILE *filep;
-    string alpstr = filename;
-    string aaa = ".mem.txt";
-    string a =  alpstr.replace(alpstr.begin()+ alpstr.find(".") ,alpstr.end(),aaa);
+    string newFileName = filename;
+    string addStr = ".mem.txt";
+    string fileName =  newFileName.replace(newFileName.begin()+ newFileName.find(".") ,newFileName.end(),addStr);
 
-    filep = fopen(a.c_str(),"w");
+    filep = fopen(fileName.c_str(),"w");
 
     for(int i = 0; i< 10000; ++i){
         fprintf(filep,"%04x\t%04x\n",i,cpu.memory[i]);
