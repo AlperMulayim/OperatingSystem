@@ -42,25 +42,27 @@ GTU_OS:	PUSH D
 array: dw 12h,34h,53h,2Ah,5Bh,6Fh,33h,21h,7Ch,0FFh,0BAh,0CBh,0A1h,1Ah,3Bh,0C3h,4Ah,5Dh,62h,0A3h,0B1h,5Ch,7Fh,0CCh,0AAh,34h
 begin:
 	LXI SP,stack 	; always initialize the stack pointer
-	MVI B, 26	;size of array
-	MVI A, READ_B	;read to B search 
-	CALL GTU_OS	
-	MOV H, B	;search B H = B
-	LXI D,array	;load array
-	mvi l, 0	;index
+	
+	MVI C, 26
+	MVI B, 26
+	MVI A, READ_B	;read the search element 
+	CALL GTU_OS
+	MOV H, B
+	LXI D,array
+	mvi l, 0
 loop:	
 	
-	LDAX D		;load D 
-	MOV B,A		
+	LDAX D
+	mOV B,A
+	
 	
 	MOV A,H
-	inr l		; ++index
-	SUB B		
-	JNZ compare	
+	inr l
+	SUB B
+	JNZ compare
 	jmp end
 
-compare:
-	INR E		;compare
+compare:INR E		;compare
 	INR E
 	DCR C 
 	JNZ loop
