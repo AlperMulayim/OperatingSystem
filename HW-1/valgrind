@@ -1,5 +1,0 @@
-valgrind --log-file=LOGVAL.txt --leak-check=yes   ./grepFromDir /home/alpermulayim/Desktop/mydir alp
-
-
-valgrind --tool=memcheck --leak-check=yes --log-file=LOGVALG.txt --show-reachable=yes --num-callers=20 --track-fds=yes ./listDir ece  /home/alpermulayim/Desktop/mydir/
-
