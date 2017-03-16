@@ -59,6 +59,7 @@ void GTUOS::READ_B(const CPU8080 &cpu) {
     printf("System Call :READ_B\n");
     printf("B reg value >>  ");
 	cin>>breg;
+    getchar();
 	cpu.state->b = breg;
 
     cycleOfSystemCall +=10;
@@ -78,6 +79,7 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
     printf("System Call :READ_MEM\n");
     printf("Memory Value >> ");
 	cin>>inputNumber;
+    getchar();
 
 	cpu.memory[adress] = inputNumber;
 
@@ -108,8 +110,9 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 
     printf("System Call : READ_STR\n");
     printf("String Value >>");
-    cin.ignore();
-    getline(cin,inputStr,'\n');
+
+    getline(cin,inputStr);
+
     for(int i= 0 ; i < inputStr.size(); ++i){
         cpu.memory[adress + i ] = inputStr[i];
     }
@@ -126,8 +129,13 @@ bool GTUOS::saveMemoryToFile(string filename,const CPU8080 &cpu) {
 
     filep = fopen(fileName.c_str(),"w");
 
-    for(int i = 0; i< 10000; ++i){
-        fprintf(filep,"%04x\t%04x\n",i,cpu.memory[i]);
+    for(int i = 0; i< 10000; ++i) {
+        if ((i % 16) == 0) {
+            fprintf(filep, "\n%04x\t%02x", i, cpu.memory[i]);
+        }
+        else {
+            fprintf(filep, "\t%02x", cpu.memory[i]);
+        }
     }
 
     fclose(filep);
