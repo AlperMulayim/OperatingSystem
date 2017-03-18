@@ -1,5 +1,5 @@
 # OperatingSystem
-###Operating System Lecture Homeworks <br />
+### Operating System Lecture Homeworks <br />
 HW-1 implementing GTUOS (special Operating System for lecture ) for some  System Calls  on Intel 8080 processor emulator in C++
 <br/> [Intel 8080] https://en.wikipedia.org/wiki/Intel_8080
 <br/> [.asm file to .com file] http://asdasd.rpg.fi/~svo/i8080/  Assemby code should be convert to .com from website
