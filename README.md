@@ -17,3 +17,4 @@ DEBUGMODE :
 <br/> 4. READ_MEM : reads an int from keyboard and put it pointed memory adress of B an C (regA :4) (10 cycle)
 <br/> 5. PRINT_STR: print the string pointed  by regB and regC ( reg A: 5)(100 cycle)
 <br/> 6. READ_STR : gets a string from keyboard and puts the memory started at pointed by regB and regC (regA : 6) (100 cycle)
+![Test Output](https://cloud.githubusercontent.com/assets/12942688/24079802/de35b7f0-0c99-11e7-9aa1-5c59e89eca83.PNG)
