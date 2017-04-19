@@ -18,3 +18,9 @@ DEBUGMODE :
 <br/> 5. PRINT_STR: print the string pointed  by regB and regC ( reg A: 5)(100 cycle)
 <br/> 6. READ_STR : gets a string from keyboard and puts the memory started at pointed by regB and regC (regA : 6) (100 cycle)<br/>
 ![Test Output](https://cloud.githubusercontent.com/assets/12942688/24079802/de35b7f0-0c99-11e7-9aa1-5c59e89eca83.PNG)
+
+### System Calls for HW-2
+<br/> 7. FORK : it works like fork() in Unix Systems , It returns result in A. On Success PID of Child process returned in parent and 0 is returned in child , On Failure return 1 for no new process is created. ( RegA : 7 ) ( 50 cycle )
+<br/> 8. EXEC : it works similar to Unix execl() system call , It load the asm program and lets the schedular to run (RegA : 8 , BC = adress of the filename) ( 80 cycle )
+<br/> 9. WAITPID : Blocks the calling process until the process with PID is terminated ( RegA = 9 RegB = holds the PID ) (80 cycle)
+
