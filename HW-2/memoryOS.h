@@ -9,9 +9,15 @@
 #include "memoryBase.h"
 
 class MemoryOS : public MemoryBase{
+
+    private:
+        uint8_t *osMemory;
+        uint8_t *virtualMem;
     public:
-            virtual uint8_t & at(uint32_t) = 0;
-            virtual uint8_t & physicalAt(uint32_t) = 0;
+        MemoryOS();
+        ~MemoryOS();
+        virtual uint8_t & at(uint32_t) = 0;
+        virtual uint8_t & physicalAt(uint32_t) = 0;
 };
 
 
