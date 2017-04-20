@@ -24,3 +24,8 @@ DEBUGMODE :
 <br/> 8. EXEC : it works similar to Unix execl() system call , It load the asm program and lets the schedular to run (RegA : 8 , BC = adress of the filename) ( 80 cycle )
 <br/> 9. WAITPID : Blocks the calling process until the process with PID is terminated ( RegA = 9 RegB = holds the PID ) (80 cycle)
 
+#### ./GTUOS file.com  DEBUGMODE
+DEBUGMODE :
+<br/> 3 . Information about each process is printed to screen when a process switch occurs , This information will be very similar to "ps -ef" commmand in Unix systems. It will include the process name and all of the process table entry.
+
+
