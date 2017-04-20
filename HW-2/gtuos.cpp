@@ -156,14 +156,18 @@ int GTUOS::getNumOfSystemCalls() {
 
 void GTUOS::FORK(const CPU8080 &cpu) {
     printf("FORK operations\n");
+    cycleOfSystemCall += 50;
 }
 
 void GTUOS::EXEC(const CPU8080 &cpu) {
     printf("EXEC operation\n");
+    cycleOfSystemCall += 80;
 }
 
 void GTUOS::WAITPID(const CPU8080 &cpu) {
     printf("WAITPID operation\n");
+
+    cycleOfSystemCall += 80;
 }
 
 
