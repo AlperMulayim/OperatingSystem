@@ -8,7 +8,6 @@
 using namespace std;
 uint64_t GTUOS::handleCall(const CPU8080 & cpu){
 
-
 	if(cpu.state->a == 1){
 		PRINT_B(cpu);
 	}
@@ -27,6 +26,15 @@ uint64_t GTUOS::handleCall(const CPU8080 & cpu){
 	else if(cpu.state->a == 6){
 		READ_STR(cpu);
 	}
+    else if(cpu.state->a == 7){
+        FORK(cpu);
+    }
+    else if(cpu.state->a == 8){
+        EXEC(cpu);
+    }
+    else if(cpu.state->a == 9){
+        WAITPID(cpu);
+    }
 
 	return 0;
 }
@@ -145,6 +153,19 @@ bool GTUOS::saveMemoryToFile(string filename,const CPU8080 &cpu) {
 int GTUOS::getNumOfSystemCalls() {
 	return  cycleOfSystemCall;
 }
+
+void GTUOS::FORK(const CPU8080 &cpu) {
+    printf("FORK operations\n");
+}
+
+void GTUOS::EXEC(const CPU8080 &cpu) {
+    printf("EXEC operation\n");
+}
+
+void GTUOS::WAITPID(const CPU8080 &cpu) {
+    printf("WAITPID operation\n");
+}
+
 
 
 

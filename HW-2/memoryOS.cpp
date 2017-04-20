@@ -15,3 +15,11 @@ MemoryOS::~MemoryOS() {
     free(virtualMem);
 }
 
+uint8_t &MemoryOS::at(uint32_t ind) {
+    return osMemory[ind];
+}
+
+uint8_t &MemoryOS::physicalAt(uint32_t ind) {
+    return  osMemory[ind];
+}
+

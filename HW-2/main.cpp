@@ -2,6 +2,7 @@
 #include "8080emuCPP.h"
 #include "gtuos.h"
 #include "memory.h"
+#include "memoryOS.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ int main (int argc, char**argv)
 	}
 	int DEBUG = atoi(argv[2]);
 
-	memory mem;
+	MemoryOS mem;
 	CPU8080 theCPU(&mem);
 	GTUOS	theOS;
 

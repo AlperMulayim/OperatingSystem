@@ -14,6 +14,9 @@ public:
 	void READ_MEM(const CPU8080 &cpu);
 	void PRINT_STR(const CPU8080 &cpu);
 	void READ_STR(const CPU8080 &cpu);
+	void FORK(const CPU8080 &cpu);
+	void EXEC(const CPU8080 &cpu);
+	void WAITPID(const CPU8080 &cpu);
 	bool saveMemoryToFile(string filename,const CPU8080 &cpu);
 	int getNumOfSystemCalls();
 

@@ -16,8 +16,8 @@ class MemoryOS : public MemoryBase{
     public:
         MemoryOS();
         ~MemoryOS();
-        virtual uint8_t & at(uint32_t) = 0;
-        virtual uint8_t & physicalAt(uint32_t) = 0;
+        virtual uint8_t & at(uint32_t ind );
+        virtual uint8_t & physicalAt(uint32_t ind);
 };
 
 
