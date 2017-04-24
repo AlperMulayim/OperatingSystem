@@ -16,7 +16,7 @@ int main (int argc, char**argv)
 
 	memory mem;
 	CPU8080 theCPU(&mem);
-	GTUOS	theOS;
+	GTUOS	theOS(argv[1]);
 
 
 	theCPU.ReadFileIntoMemoryAt(argv[1], 0x0000);

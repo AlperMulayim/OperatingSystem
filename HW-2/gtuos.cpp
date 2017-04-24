@@ -6,6 +6,30 @@
 #include "gtuos.h"
 
 using namespace std;
+
+GTUOS::GTUOS(string fileName) {
+	ProcessTableEntry process(fileName);
+	process.setParentPID(0);
+	process.setPID(processTable.generatePID());
+	process.setBaseRegister(0);
+	process.setLimitRegister(16000);
+	process.setStartCycle(0);
+	process.setStateOfProcess(1);
+	process.setProcessCycle(8000);
+	process.setThePhysicalAdress(10000);
+
+	process.printProcessEntry();
+
+	processTable.addProcess(process);
+
+	ProcessTableEntry proc = processTable.getProcess(process);
+	processTable.removeTheProcess(process);
+
+	proc.setPID(processTable.generatePID());
+	proc.printProcessEntry();
+	processTable.addProcess(proc);
+}
+
 uint64_t GTUOS::handleCall(const CPU8080 & cpu){
 
 	if(cpu.state->a == 1){
@@ -169,7 +193,6 @@ void GTUOS::WAITPID(const CPU8080 &cpu) {
 
     cycleOfSystemCall += 80;
 }
-
 
 
 

@@ -31,39 +31,41 @@ public :
 
     int getPID() const;
 
-    void setPID(int PID);
+    void setPID(int PIDV);
 
     int getParentPID() const;
 
-    void setParentPID(int parentPID);
+    void setParentPID(int parentPIDV);
 
     int getBaseRegister() const;
 
-    void setBaseRegister(int baseRegister);
+    void setBaseRegister(int baseRegisterV);
 
     int getLimitRegister() const;
 
-    void setLimitRegister(int limitRegister);
+    void setLimitRegister(int limitRegisterV);
 
     int getStartCycle() const;
 
-    void setStartCycle(int startCycle);
+    void setStartCycle(int startCycleV);
 
     int getProcessCycle() const;
 
-    void setProcessCycle(int processCycle);
+    void setProcessCycle(int processCycleV);
 
     int getStateOfProcess() const;
 
-    void setStateOfProcess(int stateOfProcess);
+    void setStateOfProcess(int stateOfProcessV);
 
     int getThePhysicalAdress() const;
 
-    void setThePhysicalAdress(int thePhysicalAdress);
+    void setThePhysicalAdress(int thePhysicalAdressV);
 
     const State8080 &getChipRegisters() const;
 
-    void setChipRegisters(const State8080 &chipRegisters);
+    void setChipRegisters(const State8080 &chipRegistersV);
+
+    void printProcessEntry();
 };
 
 

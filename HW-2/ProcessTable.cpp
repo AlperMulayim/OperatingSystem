@@ -5,6 +5,10 @@
 #include "ProcessTable.h"
 
 
+ProcessTable::ProcessTable(int givenPID) {
+    this->givenPID = givenPID;
+}
+
 void ProcessTable::addProcess(ProcessTableEntry process) {
     processList.push_back(process);
 }
@@ -39,4 +43,14 @@ bool ProcessTable::removeTheProcess(ProcessTableEntry process) {
         processList.erase(processList.begin() + processNum);
     }
 }
+
+void ProcessTable::setGivenPID() {
+    givenPID = givenPID + 1;
+}
+
+int ProcessTable::generatePID() {
+    setGivenPID();
+    return givenPID;
+}
+
 
