@@ -21,7 +21,7 @@ class ProcessTableEntry {
         int processCycle;
         int stateOfProcess;
         int thePhysicalAdress;
-        State8080 chipRegisters;
+        State8080 *chipRegisters;
 public :
     ProcessTableEntry(string filename);
 
@@ -61,9 +61,9 @@ public :
 
     void setThePhysicalAdress(int thePhysicalAdressV);
 
-    const State8080 &getChipRegisters() const;
+    State8080 * getChipRegisters() const;
 
-    void setChipRegisters(const State8080 &chipRegistersV);
+    void setChipRegisters(State8080 *chipRegistersV);
 
     void printProcessEntry();
 };

@@ -81,11 +81,11 @@ void ProcessTableEntry::setThePhysicalAdress(int thePhysicalAdressV) {
     thePhysicalAdress = thePhysicalAdressV;
 }
 
-const State8080 &ProcessTableEntry::getChipRegisters() const {
+State8080 * ProcessTableEntry::getChipRegisters() const {
     return chipRegisters;
 }
 
-void ProcessTableEntry::setChipRegisters(const State8080 &chipRegistersV) {
+void ProcessTableEntry::setChipRegisters(State8080 *chipRegistersV) {
     chipRegisters = chipRegistersV;
 }
 
@@ -100,5 +100,8 @@ void ProcessTableEntry::printProcessEntry() {
     cout <<"Process Cycle   : "<<getProcessCycle()<<endl;
     cout <<"State           : "<<getStateOfProcess()<<endl;
     cout <<"Physical Adress : "<<getThePhysicalAdress()<<endl;
+    cout <<"CPU State : "<<endl;
+    printf("A $%02x B $%02x C $%02x D $%02x E $%02x H $%02x L $%02x SP %04x\n", chipRegisters->a, chipRegisters->b, chipRegisters->c,
+           chipRegisters->d, chipRegisters->e, chipRegisters->h, chipRegisters->l, chipRegisters->sp);
     cout <<"-------------------------------"<<endl;
 }
