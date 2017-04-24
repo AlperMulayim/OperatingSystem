@@ -2,6 +2,7 @@
 #define H_GTUOS
 #include <fstream>
 #include "8080emuCPP.h"
+#include "ProcessTable.h"
 #include <string.h>
 
 using namespace std;
@@ -22,6 +23,7 @@ public:
 
 private:
 	int cycleOfSystemCall = 0;
+	ProcessTable processTable;
 };
 
 #endif
