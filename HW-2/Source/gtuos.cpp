@@ -8,7 +8,7 @@
 using namespace std;
 
 GTUOS::GTUOS(string fileName) {
-	ProcessTableEntry process(fileName);
+/*	ProcessTableEntry process(fileName);
 	process.setParentPID(0);
 	process.setPID(processTable.generatePID());
 	process.setBaseRegister(0);
@@ -28,7 +28,8 @@ GTUOS::GTUOS(string fileName) {
 	proc.setPID(processTable.generatePID());
 	proc.printProcessEntry();
 	processTable.addProcess(proc);
-}
+*/
+ }
 
 uint64_t GTUOS::handleCall(const CPU8080 & cpu){
 
@@ -77,7 +78,7 @@ void GTUOS::PRINT_MEM(const CPU8080 &cpu) {
 	//printf("C : %d   \n",cpu.state->c );
 	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 	//printf("ADDR : %d \t ",adress);
-	int res =(int) cpu.memory->physicalAt(adress);
+	int res =(int) cpu.memory->at(adress);
 	printf("System Call :PRINT_MEM\n");
 	printf("Value of Memory : %d\n",res);
 
@@ -113,7 +114,7 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
 	cin>>inputNumber;
 	getchar();
 
-	cpu.memory->physicalAt(adress) = inputNumber;
+	cpu.memory->at(adress) = (uint8_t) inputNumber;
 
 	cycleOfSystemCall +=10;
 }
@@ -125,8 +126,8 @@ void GTUOS::PRINT_STR(const CPU8080 &cpu) {
 
 	printf("System Call :PRINT_STR\n");
 	printf("Value of String  : ");
-	while(cpu.memory->physicalAt(adress) != '\0'){
-		printf("%c",cpu.memory->physicalAt( adress));
+	while(cpu.memory->at(adress) != '\0'){
+		printf("%c",cpu.memory->at( adress));
 		++adress;
 	}
 	printf("\n");
@@ -146,7 +147,7 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 	getline(cin,inputStr);
 
 	for(int i= 0 ; i < inputStr.size(); ++i){
-		cpu.memory->physicalAt( adress + i ) = inputStr[i];
+		//cpu.memory->physicalAt((uint32_t) (adress + i)) = inputStr[i];
 	}
 
 	cycleOfSystemCall +=100;

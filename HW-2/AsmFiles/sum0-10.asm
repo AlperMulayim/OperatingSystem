@@ -16,7 +16,7 @@ PRINT_STR	equ 5
 READ_STR	equ 6
 
 	; Position for stack pointer
-stack   equ 0F000h
+stack   equ 03000h
 
 	org 000H
 	jmp begin

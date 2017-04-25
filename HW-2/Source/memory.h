@@ -2,7 +2,9 @@
 #define H_MEMORY
 
 #include "memoryBase.h"
+#include <iostream>
 
+using namespace std;
 class memory: public MemoryBase {
 
 public:
