@@ -7,8 +7,8 @@
 
 memory::memory() {
     mem = (uint8_t*) malloc(0x10000);
+    setBaseRegister(0x0000);
     setLimitRegister(0x4000);
-    setBaseRegister(0);
 }
 
 memory::~memory() {
@@ -44,4 +44,5 @@ int memory::getLimitRegister() const {
 void memory::setLimitRegister(int limitRegisterV) {
     limitRegister = limitRegisterV;
 }
+
 
