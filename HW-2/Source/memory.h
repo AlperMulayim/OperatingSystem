@@ -16,6 +16,7 @@ public:
 	void setBaseRegister(int baseRegister);
 	int getLimitRegister() const;
 	void setLimitRegister(int limitRegister);
+
 private:
 	uint8_t * mem;
 	int baseRegister;

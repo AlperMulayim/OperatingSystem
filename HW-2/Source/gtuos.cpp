@@ -11,7 +11,7 @@ GTUOS::GTUOS(string fileName) {
 
 	ProcessTableEntry process(fileName);
 
-    processTable.setWorkingPID(48001);
+    processTable.setWorkingPID(21);
 	process.setParentPID(0);
 	process.setPID(processTable.generatePID());
 	process.setBaseRegister(0);
@@ -189,26 +189,44 @@ void GTUOS::FORK(const CPU8080 &cpu) {
 
     ProcessTableEntry currentProc = processTable.getProcessByID(processTable.getWorkingPID());
 
-    ProcessTableEntry newProc("CHILD");
+    ProcessTableEntry newProc(currentProc.getFilename());
 
     newProc.setPID(processTable.generatePID());
     newProc.setParentPID(currentProc.getPID());
     newProc.setBaseRegister(processTable.getGivenBaseRegister());
     newProc.setLimitRegister(processTable.getGivenLimitRegister());
     newProc.setProcessCycle(30);
-    newProc.setStartCycle(90);
-    newProc.setThePhysicalAdress(5000);
+    newProc.setStartCycle(getNumOfSystemCalls());
     State8080 *state8080 = currentProc.getChipRegisters();
     newProc.setStateOfProcess(6);
-    newProc.setChipRegisters(state8080);
+    newProc.setThePhysicalAdress(newProc.getBaseRegister());
+
+    //set parent B;
+    state8080->b = (uint8_t) newProc.getPID();
+    processTable.getProcessByID(newProc.getParentPID()).setChipRegisters(state8080);
+
+    //set child B;
+    State8080 *state80801 = state8080;
+    state80801->b = 0;
+    newProc.setChipRegisters(state80801);
+
+
     processTable.addProcess(newProc);
 
     processTable.setWorkingPID(newProc.getPID());
-    cout <<"PROCESS TABLE IN FORK"<<endl;
-    processTable.printProcessTable();
 
+    copyMemory(cpu, (uint32_t) currentProc.getBaseRegister(), (uint32_t) currentProc.getLimitRegister(),
+               (uint32_t) newProc.getBaseRegister());
     cycleOfSystemCall += 50;
 }
+void GTUOS::copyMemory(const CPU8080 &cpu,uint32_t startAdr,uint32_t startLimitAdr, uint32_t endAdr) {
+    while(startAdr < startLimitAdr){
+        cpu.memory->physicalAt(endAdr) = cpu.memory->physicalAt(startAdr);
+        ++startAdr;
+        ++endAdr;
+    }
+}
+
 
 void GTUOS::EXEC(const CPU8080 &cpu) {
     printf("EXEC operation\n");

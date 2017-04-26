@@ -81,7 +81,7 @@ void ProcessTableEntry::setThePhysicalAdress(int thePhysicalAdressV) {
     thePhysicalAdress = thePhysicalAdressV;
 }
 
-State8080 * ProcessTableEntry::getChipRegisters() const {
+State8080*  ProcessTableEntry::getChipRegisters() const {
     return chipRegisters;
 }
 

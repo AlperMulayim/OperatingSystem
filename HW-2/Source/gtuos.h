@@ -22,8 +22,8 @@ public:
 	void WAITPID(const CPU8080 &cpu);
 	bool saveMemoryToFile(string filename,const CPU8080 &cpu);
 	int getNumOfSystemCalls();
-
-	ProcessTable processTable = ProcessTable(48000);
+    void copyMemory(const CPU8080 &cpu,uint32_t startAdr,uint32_t limitStartAddr, uint32_t endAdr);
+	ProcessTable processTable = ProcessTable(20);
 private:
 	int cycleOfSystemCall = 0;
 

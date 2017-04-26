@@ -32,6 +32,7 @@ int main (int argc, char**argv)
 		printf("Emulator Cycle : %d\n",emulatorCycle);
 		printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
 		theOS.saveMemoryToFile(argv[1],theCPU);
+        theOS.processTable.printProcessTable();
 	}
 	else if(DEBUG == 1){
 		do {
@@ -58,6 +59,20 @@ int main (int argc, char**argv)
 		printf("Emulator Cycle : %d\n",emulatorCycle);
 		printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
 	}
+    else if(DEBUG == 3){
+        do { //press enter for debug mod
+            emulatorCycle += theCPU.Emulate8080p(DEBUG);
+            if (theCPU.isSystemCall()) {
+                theOS.handleCall(theCPU);
+            }
+        } while (!theCPU.isHalted());
+        printf("Cycle of System Calls : %d\n",theOS.getNumOfSystemCalls());
+        printf("Emulator Cycle : %d\n",emulatorCycle);
+        printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
+
+        theOS.processTable.printProcessTable();
+        theOS.saveMemoryToFile(argv[1],theCPU);
+    }
 
 	return 0;
 }

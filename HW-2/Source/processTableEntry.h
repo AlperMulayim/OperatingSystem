@@ -61,7 +61,7 @@ public :
 
     void setThePhysicalAdress(int thePhysicalAdressV);
 
-    State8080 * getChipRegisters() const;
+    State8080* getChipRegisters() const;
 
     void setChipRegisters(State8080 *chipRegistersV);
 
