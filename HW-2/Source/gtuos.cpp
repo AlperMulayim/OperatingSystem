@@ -11,7 +11,7 @@ GTUOS::GTUOS(string fileName) {
 
 	ProcessTableEntry process(fileName);
 
-    currentWorkPID = 48001;
+    processTable.setWorkingPID(48001);
 	process.setParentPID(0);
 	process.setPID(processTable.generatePID());
 	process.setBaseRegister(0);
@@ -187,7 +187,7 @@ void GTUOS::FORK(const CPU8080 &cpu) {
     printf("FORK operations\n");
 
 
-    ProcessTableEntry currentProc = processTable.getProcessByID(currentWorkPID);
+    ProcessTableEntry currentProc = processTable.getProcessByID(processTable.getWorkingPID());
 
     ProcessTableEntry newProc(currentProc.getFilename());
 

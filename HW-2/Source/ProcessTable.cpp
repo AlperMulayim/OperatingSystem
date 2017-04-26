@@ -9,6 +9,14 @@ ProcessTable::ProcessTable(int givenPID) {
     this->givenPID = givenPID;
 }
 
+int ProcessTable::getWorkingPID() const {
+    return workingPID;
+}
+
+void ProcessTable::setWorkingPID(int workingPIDV) {
+    workingPID = workingPIDV;
+}
+
 void ProcessTable::addProcess(ProcessTableEntry process) {
     processList.push_back(process);
 }
@@ -73,5 +81,4 @@ void ProcessTable::printProcessTable() {
         processList[i].printProcessEntry();
     }
 }
-
 

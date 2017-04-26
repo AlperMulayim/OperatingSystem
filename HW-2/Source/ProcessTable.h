@@ -13,7 +13,13 @@ class ProcessTable {
     private:
         vector<ProcessTableEntry> processList;
         int givenPID;
-    public:
+        int workingPID;
+public:
+    int getWorkingPID() const;
+
+    void setWorkingPID(int workingPID);
+
+public:
         ProcessTable(int givenPID);
         void addProcess(ProcessTableEntry process);
         ProcessTableEntry getProcess(ProcessTableEntry process);

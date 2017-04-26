@@ -26,8 +26,6 @@ public:
 	ProcessTable processTable = ProcessTable(48000);
 private:
 	int cycleOfSystemCall = 0;
-    int currentWorkPID;
-
 };
 
 #endif
