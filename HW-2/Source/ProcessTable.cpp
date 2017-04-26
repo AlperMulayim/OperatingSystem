@@ -6,7 +6,9 @@
 
 
 ProcessTable::ProcessTable(int givenPID) {
-    this->givenPID = givenPID;
+   this->givenPID = givenPID;
+   this->givenBaseRegister = 0;
+   this->givenLimitRegister = 0x4000;
 }
 
 int ProcessTable::getWorkingPID() const {
@@ -80,5 +82,27 @@ void ProcessTable::printProcessTable() {
         cout <<"------------------------------"<<endl;
         processList[i].printProcessEntry();
     }
+}
+
+int ProcessTable::getGivenLimitRegister() {
+    int  givedLimitRegister = this->givenBaseRegister + 0x4000;
+    setGivenLimitRegister(givedLimitRegister);
+    return givedLimitRegister;
+}
+
+void ProcessTable::setGivenLimitRegister(int givenLimitRegisterV) {
+    givenLimitRegister = givenLimitRegisterV;
+
+}
+
+int ProcessTable::getGivenBaseRegister() {
+    int  givedBaseRegister = this->givenBaseRegister + 0x4000;
+    setGivenBaseRegister(givedBaseRegister);
+    return givedBaseRegister;
+
+}
+
+void ProcessTable::setGivenBaseRegister(int givenBaseRegisterV) {
+    givenBaseRegister = givenBaseRegisterV;
 }
 

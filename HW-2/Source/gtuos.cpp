@@ -151,7 +151,7 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 	getline(cin,inputStr);
 
 	for(int i= 0 ; i < inputStr.size(); ++i){
-		//cpu.memory->physicalAt((uint32_t) (adress + i)) = inputStr[i];
+		cpu.memory->at((uint32_t) (adress + i)) = (uint8_t) inputStr[i];
 	}
 
 	cycleOfSystemCall +=100;
@@ -189,20 +189,22 @@ void GTUOS::FORK(const CPU8080 &cpu) {
 
     ProcessTableEntry currentProc = processTable.getProcessByID(processTable.getWorkingPID());
 
-    ProcessTableEntry newProc(currentProc.getFilename());
+    ProcessTableEntry newProc("CHILD");
 
     newProc.setPID(processTable.generatePID());
     newProc.setParentPID(currentProc.getPID());
-    newProc.setBaseRegister(0x4000);
-    newProc.setLimitRegister(0x8000);
+    newProc.setBaseRegister(processTable.getGivenBaseRegister());
+    newProc.setLimitRegister(processTable.getGivenLimitRegister());
     newProc.setProcessCycle(30);
     newProc.setStartCycle(90);
     newProc.setThePhysicalAdress(5000);
-    State8080 *state8080;
+    State8080 *state8080 = currentProc.getChipRegisters();
     newProc.setStateOfProcess(6);
     newProc.setChipRegisters(state8080);
     processTable.addProcess(newProc);
-    cout <<"PROCESS TABLE IN FORK";
+
+    processTable.setWorkingPID(newProc.getPID());
+    cout <<"PROCESS TABLE IN FORK"<<endl;
     processTable.printProcessTable();
 
     cycleOfSystemCall += 50;
@@ -210,7 +212,20 @@ void GTUOS::FORK(const CPU8080 &cpu) {
 
 void GTUOS::EXEC(const CPU8080 &cpu) {
     printf("EXEC operation\n");
-    cycleOfSystemCall += 80;
+
+    uint16_t  adress = 0;
+
+    adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
+
+    printf("System Call :PRINT_STR\n");
+    printf("Value of String  : ");
+    while(cpu.memory->at(adress) != '\0'){
+        printf("%c",cpu.memory->at( adress));
+        ++adress;
+    }
+    printf("\n");
+
+
 }
 
 void GTUOS::WAITPID(const CPU8080 &cpu) {

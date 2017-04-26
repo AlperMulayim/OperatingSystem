@@ -14,13 +14,16 @@ class ProcessTable {
         vector<ProcessTableEntry> processList;
         int givenPID;
         int workingPID;
-public:
-    int getWorkingPID() const;
-
-    void setWorkingPID(int workingPID);
-
+        int givenLimitRegister;
+        int givenBaseRegister;
 public:
         ProcessTable(int givenPID);
+        int getWorkingPID() const;
+        int getGivenLimitRegister();
+        void setGivenLimitRegister(int givenLimitRegister);
+        int getGivenBaseRegister();
+        void setGivenBaseRegister(int givenBaseRegister);
+        void setWorkingPID(int workingPID);
         void addProcess(ProcessTableEntry process);
         ProcessTableEntry getProcess(ProcessTableEntry process);
         void setGivenPID();
