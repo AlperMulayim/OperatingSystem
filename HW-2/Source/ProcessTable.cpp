@@ -53,4 +53,25 @@ int ProcessTable::generatePID() {
     return givenPID;
 }
 
+ProcessTableEntry ProcessTable::getProcessByID(int pid) {
+
+    ProcessTableEntry proc("NOT PROCESS");
+    proc.setPID(-1);
+    for(int i = 0 ; i< processList.size(); ++i){
+        if(processList[i].getPID() == pid){
+            return processList[i];
+        }
+    }
+    return  proc;
+}
+
+void ProcessTable::printProcessTable() {
+    cout <<"-------PROCESS TABLE-------"<<endl;
+    for(int i = 0; i<processList.size();++i){
+        cout << "Process ("<<i <<")"<<endl;
+        cout <<"------------------------------"<<endl;
+        processList[i].printProcessEntry();
+    }
+}
+
 

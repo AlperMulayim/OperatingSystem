@@ -16,7 +16,7 @@ class ProcessTableEntry {
         int PID;
         int parentPID;
         int baseRegister;
-        int limitRegister;
+        uint32_t limitRegister;
         int startCycle;
         int processCycle;
         int stateOfProcess;

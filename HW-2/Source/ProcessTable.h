@@ -22,6 +22,8 @@ class ProcessTable {
         int getNumOfProcess();
         int isInTable(ProcessTableEntry process);
         int generatePID();
+        ProcessTableEntry getProcessByID(int pid);
+        void printProcessTable();
 };
 
 

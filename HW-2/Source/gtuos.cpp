@@ -10,6 +10,8 @@ using namespace std;
 GTUOS::GTUOS(string fileName) {
 
 	ProcessTableEntry process(fileName);
+
+    currentWorkPID = 48001;
 	process.setParentPID(0);
 	process.setPID(processTable.generatePID());
 	process.setBaseRegister(0);
@@ -21,9 +23,13 @@ GTUOS::GTUOS(string fileName) {
 	State8080 *state8080;
 	process.setChipRegisters(state8080);
 
-	process.printProcessEntry();
+	//process.printProcessEntry();
 
 	processTable.addProcess(process);
+    //process.setPID(processTable.generatePID());
+    //processTable.addProcess(process);
+
+   // processTable.printProcessTable();
 
 
 
@@ -179,6 +185,26 @@ int GTUOS::getNumOfSystemCalls() {
 
 void GTUOS::FORK(const CPU8080 &cpu) {
     printf("FORK operations\n");
+
+
+    ProcessTableEntry currentProc = processTable.getProcessByID(currentWorkPID);
+
+    ProcessTableEntry newProc(currentProc.getFilename());
+
+    newProc.setPID(processTable.generatePID());
+    newProc.setParentPID(currentProc.getPID());
+    newProc.setBaseRegister(0x4000);
+    newProc.setLimitRegister(0x8000);
+    newProc.setProcessCycle(30);
+    newProc.setStartCycle(90);
+    newProc.setThePhysicalAdress(5000);
+    State8080 *state8080;
+    newProc.setStateOfProcess(6);
+    newProc.setChipRegisters(state8080);
+    processTable.addProcess(newProc);
+    cout <<"PROCESS TABLE IN FORK";
+    processTable.printProcessTable();
+
     cycleOfSystemCall += 50;
 }
 

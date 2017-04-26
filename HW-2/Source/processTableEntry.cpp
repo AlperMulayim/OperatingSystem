@@ -29,8 +29,8 @@ int ProcessTableEntry::getParentPID() const {
     return parentPID;
 }
 
-void ProcessTableEntry::setParentPID(int parentPID) {
-    ProcessTableEntry::parentPID = parentPID;
+void ProcessTableEntry::setParentPID(int parentPIDV) {
+    parentPID = parentPIDV;
 }
 
 int ProcessTableEntry::getBaseRegister() const {
@@ -94,12 +94,15 @@ void ProcessTableEntry::printProcessEntry() {
     cout <<"Name            : " <<getFilename() <<endl;
     cout <<"PID             : " <<getPID() <<endl;
     cout <<"ParentPID       : " <<getParentPID() <<endl;
-    cout <<"Base Register   : "<<getBaseRegister()<<endl;
-    cout <<"Limit Register  : "<<getLimitRegister()<<endl;
+    //cout <<"Base Register   : "<<getBaseRegister()<<endl;
+    //cout <<"Limit Register  : "<<getLimitRegister()<<endl;
+    printf("Base Register   : 0x%04x \n",getBaseRegister());
+    printf("Limit Register  : 0x%04x \n",getLimitRegister());
     cout <<"Start Cycle     : "<<getStartCycle()<<endl;
     cout <<"Process Cycle   : "<<getProcessCycle()<<endl;
     cout <<"State           : "<<getStateOfProcess()<<endl;
-    cout <<"Physical Adress : "<<getThePhysicalAdress()<<endl;
+    //cout <<"Physical Adress : "<<getThePhysicalAdress()<<endl;
+    printf("Physical Aadres : 0x%04x \n",getThePhysicalAdress());
     cout <<"CPU State : "<<endl;
     printf("A $%02x B $%02x C $%02x D $%02x E $%02x H $%02x L $%02x SP %04x\n", chipRegisters->a, chipRegisters->b, chipRegisters->c,
            chipRegisters->d, chipRegisters->e, chipRegisters->h, chipRegisters->l, chipRegisters->sp);
