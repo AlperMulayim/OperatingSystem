@@ -14,6 +14,9 @@ READ_B		equ 3
 READ_MEM	equ 4
 PRINT_STR	equ 5
 READ_STR	equ 6
+FORK 		equ 7
+EXEC 		equ 8
+WAITPID 	equ 9
 
 	; Position for stack pointer
 stack   equ 03000h

@@ -14,9 +14,9 @@ int main (int argc, char**argv)
 	}
 	int DEBUG = atoi(argv[2]);
 
-	memory mem;
+	OSMemory mem;
 	CPU8080 theCPU(&mem);
-	GTUOS	theOS(argv[1]);
+	GTUOS theOS(argv[1],&mem);
 
 
 	theCPU.ReadFileIntoMemoryAt(argv[1], 0x0000);

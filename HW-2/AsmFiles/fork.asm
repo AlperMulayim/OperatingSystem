@@ -1,6 +1,6 @@
         ; 8080 assembler code
-        .hexfile sum.hex
-        .binfile sum.com
+        .hexfile fork.hex
+        .binfile fork.com
         ; try "hex" for downloading in hex format
         .download bin  
         .objcopy gobjcopy
@@ -53,9 +53,13 @@ loop:
 	DCR c		; --C
 	JNZ loop	; goto loop if C!=0
 	STA SUM		; SUM = A
-	LDA SUM		; A = SUM
+	LDA SUM		; A = SU
 			; Now we will call the OS to print the value of sum
 	MOV B, A	; B = A
 	MVI A, PRINT_B	; store the OS call code to A
 	call GTU_OS	; call the OS
+
+	MVI a, FORK; fork
+	call GTU_OS; 
+
 	hlt		; end program

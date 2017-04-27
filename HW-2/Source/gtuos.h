@@ -4,13 +4,14 @@
 #include "8080emuCPP.h"
 #include "ProcessTable.h"
 #include "ProcessTable.h"
+#include "memory.h"
 #include <string.h>
 
 using namespace std;
 class GTUOS{
 public:
-	GTUOS(string fileName);
-	uint64_t handleCall(const CPU8080 & cpu);
+	GTUOS(string fileName,OSMemory *mainMemory);
+	uint64_t handleCall( CPU8080 & cpu);
 	void PRINT_B(const CPU8080 &cpu);
 	void PRINT_MEM(const CPU8080 &cpu);
 	void READ_B(const CPU8080 &cpu);
@@ -18,12 +19,13 @@ public:
 	void PRINT_STR(const CPU8080 &cpu);
 	void READ_STR(const CPU8080 &cpu);
 	void FORK(const CPU8080 &cpu);
-	void EXEC(const CPU8080 &cpu);
+	void EXEC( CPU8080 &cpu);
 	void WAITPID(const CPU8080 &cpu);
 	bool saveMemoryToFile(string filename,const CPU8080 &cpu);
 	int getNumOfSystemCalls();
     void copyMemory(const CPU8080 &cpu,uint32_t startAdr,uint32_t limitStartAddr, uint32_t endAdr);
 	ProcessTable processTable = ProcessTable(20);
+    OSMemory *memory;
 private:
 	int cycleOfSystemCall = 0;
 

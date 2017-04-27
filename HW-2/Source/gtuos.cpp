@@ -5,10 +5,12 @@
 #include "8080emuCPP.h"
 #include "gtuos.h"
 
+
 using namespace std;
 
-GTUOS::GTUOS(string fileName) {
+GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
 
+	memory = mainMemory;
 	ProcessTableEntry process(fileName);
 
     processTable.setWorkingPID(21);
@@ -35,7 +37,7 @@ GTUOS::GTUOS(string fileName) {
 
  }
 
-uint64_t GTUOS::handleCall(const CPU8080 & cpu){
+uint64_t GTUOS::handleCall( CPU8080 & cpu){
 
 	if(cpu.state->a == 1){
 		PRINT_B(cpu);
@@ -82,7 +84,7 @@ void GTUOS::PRINT_MEM(const CPU8080 &cpu) {
 	//printf("C : %d   \n",cpu.state->c );
 	adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 	//printf("ADDR : %d \t ",adress);
-	int res =(int) cpu.memory->at(adress);
+	int res =(int) memory->at(adress);
 	printf("System Call :PRINT_MEM\n");
 	printf("Value of Memory : %d\n",res);
 
@@ -118,7 +120,7 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
 	cin>>inputNumber;
 	getchar();
 
-	cpu.memory->at(adress) = (uint8_t) inputNumber;
+	memory->at(adress) = (uint8_t) inputNumber;
 
 	cycleOfSystemCall +=10;
 }
@@ -130,8 +132,8 @@ void GTUOS::PRINT_STR(const CPU8080 &cpu) {
 
 	printf("System Call :PRINT_STR\n");
 	printf("Value of String  : ");
-	while(cpu.memory->at(adress) != '\0'){
-		printf("%c",cpu.memory->at( adress));
+	while(memory->at(adress) != '\0'){
+		printf("%c",memory->at( adress));
 		++adress;
 	}
 	printf("\n");
@@ -151,7 +153,7 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 	getline(cin,inputStr);
 
 	for(int i= 0 ; i < inputStr.size(); ++i){
-		cpu.memory->at((uint32_t) (adress + i)) = (uint8_t) inputStr[i];
+		memory->at((uint32_t) (adress + i)) = (uint8_t) inputStr[i];
 	}
 
 	cycleOfSystemCall +=100;
@@ -168,10 +170,10 @@ bool GTUOS::saveMemoryToFile(string filename,const CPU8080 &cpu) {
 
 	for(int i = 0; i< 65536; ++i) {
 		if ((i % 16) == 0) {
-			fprintf(filep, "\n%04x\t%02x", i, cpu.memory->physicalAt(i) );
+			fprintf(filep, "\n%04x\t%02x", i, memory->physicalAt(i) );
 		}
 		else {
-			fprintf(filep, "\t%02x", cpu.memory->physicalAt(i));
+			fprintf(filep, "\t%02x", memory->physicalAt(i));
 		}
 	}
 
@@ -219,29 +221,37 @@ void GTUOS::FORK(const CPU8080 &cpu) {
                (uint32_t) newProc.getBaseRegister());
     cycleOfSystemCall += 50;
 }
+
 void GTUOS::copyMemory(const CPU8080 &cpu,uint32_t startAdr,uint32_t startLimitAdr, uint32_t endAdr) {
     while(startAdr < startLimitAdr){
-        cpu.memory->physicalAt(endAdr) = cpu.memory->physicalAt(startAdr);
+        memory->physicalAt(endAdr) = memory->physicalAt(startAdr);
         ++startAdr;
         ++endAdr;
     }
 }
 
 
-void GTUOS::EXEC(const CPU8080 &cpu) {
+void GTUOS::EXEC( CPU8080 &cpu) {
     printf("EXEC operation\n");
 
     uint16_t  adress = 0;
-
+	string fileName;
+	int i = 0;
     adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 
-    printf("System Call :PRINT_STR\n");
-    printf("Value of String  : ");
-    while(cpu.memory->at(adress) != '\0'){
-        printf("%c",cpu.memory->at( adress));
+    printf("FileName  : ");
+    while(memory->at(adress) != '\0'){
+        printf("%c",memory->at( adress));
+		fileName[i] = memory->at(adress);
+		++i;
         ++adress;
     }
+	fileName[i] = '\0';
     printf("\n");
+
+	cout <<"File :: :::: :" <<fileName<<"::::::"<<endl;
+	const char *file = fileName.c_str();
+	cpu.ReadFileIntoMemoryAt(file,0x5000);
 
 
 }

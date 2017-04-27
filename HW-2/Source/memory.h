@@ -1,15 +1,15 @@
-#ifndef H_MEMORY
-#define H_MEMORY
+#ifndef H_OSMemory
+#define H_OSMemory
 
-#include "memoryBase.h"
+#include "MemoryBase.h"
 #include <iostream>
 
 using namespace std;
-class memory: public MemoryBase {
+class OSMemory : public MemoryBase {
 
 public:
-	memory();
-	~memory();
+	OSMemory();
+	~OSMemory();
 	virtual uint8_t & at(uint32_t ind);
 	virtual uint8_t & physicalAt(uint32_t ind);
 	int getBaseRegister() const;
