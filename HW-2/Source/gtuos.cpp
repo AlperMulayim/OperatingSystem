@@ -235,7 +235,7 @@ void GTUOS::EXEC( CPU8080 &cpu) {
     printf("EXEC operation\n");
 
     uint16_t  adress = 0;
-	string fileName;
+	char fileName[30];
 	int i = 0;
     adress = (((uint16_t)cpu.state->b << 8) | cpu.state->c);
 
@@ -249,9 +249,18 @@ void GTUOS::EXEC( CPU8080 &cpu) {
 	fileName[i] = '\0';
     printf("\n");
 
-	cout <<"File :: :::: :" <<fileName<<"::::::"<<endl;
-	const char *file = fileName.c_str();
-	cpu.ReadFileIntoMemoryAt(file,0x5000);
+	//cout <<"File :: :::: :" <<fileName<<"::::::"<<endl;
+
+    //set the process
+	cpu.ReadFileIntoMemoryAt(fileName,
+                             (uint32_t) processTable.getProcessByID(processTable.getWorkingPID()).getBaseRegister());
+
+    cpu.state->pc = (uint16_t) processTable.getProcessByID(processTable.getWorkingPID()).getBaseRegister();
+    string name = fileName;
+   // cout <<"FILENAME : "<<name<<processTable.getWorkingPID();
+
+
+    processTable.getProcessByID(processTable.getWorkingPID()).setFilename(fileName);
 
 
 }
@@ -260,6 +269,7 @@ void GTUOS::WAITPID(const CPU8080 &cpu) {
     printf("WAITPID operation\n");
 
     cycleOfSystemCall += 80;
+
 }
 
 

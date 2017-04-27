@@ -1,6 +1,6 @@
         ; 8080 assembler code
-        .hexfile sum.hex
-        .binfile sum.com
+        .hexfile exec.hex
+        .binfile exec.com
         ; try "hex" for downloading in hex format
         .download bin  
         .objcopy gobjcopy
@@ -42,20 +42,18 @@ GTU_OS:	PUSH D
 	;This program adds numbers from 0 to 10. The result is stored at variable
 	; sum. The results is also printed on the screen.
 
-sum	ds 2 ; will keep the sum
+
+string:	dw 'sum.com',00H ; null terminated string
 
 begin:
-	LXI SP,stack 	; always initialize the stack pointer
-    mvi c, 10	; init C with 10
-	mvi a, 0	; A = 0
-loop:
-	ADD c		; A = A + C
-	DCR c		; --C
-	JNZ loop	; goto loop if C!=0
-	STA SUM		; SUM = A
-	LDA SUM		; A = SUM
-			; Now we will call the OS to print the value of sum
-	MOV B, A	; B = A
-	MVI A, PRINT_B	; store the OS call code to A
+	LXI SP,stack 		; always initialize the stack pointer
+
+						; Now we will call the OS to print the value of sum
+	LXI B, string		; put the address of string in registers B and C
+	MVI A, PRINT_STR	; store the OS call code to A
 	call GTU_OS	; call the OS
+
+	MVI A,EXEC
+	call GTU_OS;
+
 	hlt		; end program

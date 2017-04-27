@@ -18,7 +18,6 @@ int main (int argc, char**argv)
 	CPU8080 theCPU(&mem);
 	GTUOS theOS(argv[1],&mem);
 
-
 	theCPU.ReadFileIntoMemoryAt(argv[1], 0x0000);
 	unsigned emulatorCycle = 0;
 	if(DEBUG == 0) {
