@@ -104,3 +104,7 @@ void ProcessTable::setGivenBaseRegister(int givenBaseRegisterV) {
     givenBaseRegister = givenBaseRegisterV;
 }
 
+ProcessTableEntry &ProcessTable::getNextProcess() {
+    return processList[0];
+}
+

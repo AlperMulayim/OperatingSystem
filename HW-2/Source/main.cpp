@@ -16,8 +16,9 @@ int main (int argc, char**argv)
 
 	OSMemory mem;
 	CPU8080 theCPU(&mem);
-	GTUOS theOS(argv[1],&mem);
+	GTUOS theOS(argv[1], &mem,theCPU);
 
+    int systemCall = 0;
 
 	theCPU.ReadFileIntoMemoryAt(argv[1], 0x0000);
 	unsigned emulatorCycle = 0;
@@ -26,15 +27,22 @@ int main (int argc, char**argv)
 
 			emulatorCycle +=  theCPU.Emulate8080p(DEBUG);
 			theOS.setCurrentEmulatorCycle(emulatorCycle);
-			if (theCPU.isSystemCall())
-				theOS.handleCall(theCPU);
+            theOS.roundRobinAlgorithm(theCPU);
+			if (theCPU.isSystemCall()) {
+                theOS.handleCall(theCPU);
+                //theOS.roundRobinAlgorithm(theCPU);
+                systemCall += theOS.getNumOfSystemCalls();
+            }
 		} while (!theCPU.isHalted());
 
-		printf("Cycle of System Calls : %d\n",theOS.getNumOfSystemCalls());
+
+		printf("Cycle of System Calls : %d\n",systemCall);
 		printf("Emulator Cycle : %d\n",emulatorCycle);
-		printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
+
+
+		printf("Total Cycle : %d\n",emulatorCycle + systemCall);
 		printf("OS EMulator : %d\n",theOS.getTotalEmulatorCycle());
-		printf("TOTAL  : %d\n",theOS.getTotalEmulatorCycle() + theOS.getNumOfSystemCalls());
+		printf("TOTAL  : %d\n",theOS.getTotalEmulatorCycle() + systemCall);
 		theOS.saveMemoryToFile(argv[1],theCPU);
         theOS.processTable.printProcessTable();
 	}
@@ -48,6 +56,7 @@ int main (int argc, char**argv)
 		printf("Cycle of System Calls : %d\n",theOS.getNumOfSystemCalls());
 		printf("Emulator Cycle : %d\n",emulatorCycle);
 		printf("Total Cycle : %d\n",emulatorCycle + theOS.getNumOfSystemCalls());
+
 
 		theOS.saveMemoryToFile(argv[1],theCPU);
 

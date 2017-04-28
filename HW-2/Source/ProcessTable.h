@@ -26,10 +26,11 @@ public:
         int getNumOfProcess();
         int isInTable(ProcessTableEntry process);
         int generatePID();
-        ProcessTableEntry &getProcessByID(int pid);
         void printProcessTable();
+        ProcessTableEntry &getProcessByID(int pid);
+        ProcessTableEntry &getNextProcess();
 
- private:
+private:
         vector<ProcessTableEntry> processList;
         int givenPID;
         int workingPID;

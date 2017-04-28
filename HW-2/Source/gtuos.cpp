@@ -8,7 +8,7 @@
 
 using namespace std;
 
-GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
+GTUOS::GTUOS(string fileName,OSMemory *mainMemory, CPU8080 &cpu) {
 
 
 	setTotalEmulatorCycle(0);
@@ -21,19 +21,22 @@ GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
 	process.setPID(processTable.generatePID());
 	process.setBaseRegister(0);
 
-    cout <<"EMULATOR in GTUOS : "<<getTotalEmulatorCycle() << "sys" << cycleOfSystemCall <<endl;
+   // cout <<"EMULATOR in GTUOS : "<<getTotalEmulatorCycle() << "sys" << cycleOfSystemCall <<endl;
     process.setStartCycle(getTotalEmulatorCycle() + cycleOfSystemCall);
 	process.setLimitRegister(0x4000);
 	process.setStateOfProcess(1);
 	process.setProcessCycle(0);
 	process.setThePhysicalAdress(0);
-	State8080 state8080;
+
+    State8080 state8080 = *cpu.state;
 	process.setChipRegisters(state8080);
 
 	//process.printProcessEntry();
 
-	processTable.addProcess(process);
-    //process.setPID(processTable.generatePID());
+    processTable.addProcess(process);
+
+	//processTable.addProcess(process);
+
     //processTable.addProcess(process);
 
    // processTable.printProcessTable();
@@ -79,7 +82,7 @@ void GTUOS::PRINT_B(const CPU8080 &cpu) {
 
 	printf("System Call :PRINT_B\n");
 	printf("Value of B : %d\n", cpu.state->b);
-	cycleOfSystemCall +=10;
+	cycleOfSystemCall =10;
 }
 
 //if state a == 2 BC == adress
@@ -93,7 +96,7 @@ void GTUOS::PRINT_MEM(const CPU8080 &cpu) {
 	printf("System Call :PRINT_MEM\n");
 	printf("Value of Memory : %d\n",res);
 
-	cycleOfSystemCall +=10;
+	cycleOfSystemCall =10;
 
 }
 
@@ -106,7 +109,7 @@ void GTUOS::READ_B(const CPU8080 &cpu) {
 	getchar();
 	cpu.state->b = breg;
 
-	cycleOfSystemCall +=10;
+	cycleOfSystemCall =10;
 }
 
 //if state a == 4 read int from keyboard
@@ -127,7 +130,7 @@ void GTUOS::READ_MEM(const CPU8080 &cpu) {
 
 	memory->at(adress) = (uint8_t) inputNumber;
 
-	cycleOfSystemCall +=10;
+	cycleOfSystemCall =10;
 }
 
 //prints the str in memory address until \0
@@ -143,7 +146,7 @@ void GTUOS::PRINT_STR(const CPU8080 &cpu) {
 	}
 	printf("\n");
 
-	cycleOfSystemCall +=100;
+	cycleOfSystemCall =100;
 }
 
 void GTUOS::READ_STR(const CPU8080 &cpu) {
@@ -161,7 +164,7 @@ void GTUOS::READ_STR(const CPU8080 &cpu) {
 		memory->at((uint32_t) (adress + i)) = (uint8_t) inputStr[i];
 	}
 
-	cycleOfSystemCall +=100;
+	cycleOfSystemCall =100;
 }
 
 bool GTUOS::saveMemoryToFile(string filename,const CPU8080 &cpu) {
@@ -219,14 +222,26 @@ void GTUOS::FORK(const CPU8080 &cpu) {
 
 
     newProc.setStartCycle(getTotalEmulatorCycle() + cycleOfSystemCall);
-    cout <<"EMULATOR in FORK : "<<getTotalEmulatorCycle() << "sys : " << cycleOfSystemCall <<endl;
+   // cout <<"EMULATOR in FORK : "<<getTotalEmulatorCycle() << "sys : " << cycleOfSystemCall <<endl;
+
+    state80801.pc +=1;
+
+    processTable.removeTheProcess(currentProc);
+
+    currentProc.setChipRegisters(state80801);
+
+    processTable.addProcess(currentProc);
+
+    newProc.getChipRegisters().pc += 1;
+
     processTable.addProcess(newProc);
 
-    processTable.setWorkingPID(newProc.getPID());
 
+
+     processTable.setWorkingPID(newProc.getPID());
     copyMemory(cpu, (uint32_t) currentProc.getBaseRegister(), (uint32_t) currentProc.getLimitRegister(),
                (uint32_t) newProc.getBaseRegister());
-    cycleOfSystemCall += 50;
+    cycleOfSystemCall = 50;
 
     //TODO: Gercek CPUya schedularda eklenecek state
 }
@@ -271,14 +286,14 @@ void GTUOS::EXEC( CPU8080 &cpu) {
 
     processTable.getProcessByID(processTable.getWorkingPID()).setFilename(name);
 
-	cycleOfSystemCall += 80;
+	cycleOfSystemCall = 80;
 
 }
 
 void GTUOS::WAITPID(const CPU8080 &cpu) {
     printf("WAITPID operation\n");
 
-    cycleOfSystemCall += 80;
+    cycleOfSystemCall = 80;
 
 }
 
@@ -298,6 +313,66 @@ void GTUOS::setCurrentEmulatorCycle(int currentEmulatorCycleV) {
 	currentEmulatorCycle = currentEmulatorCycleV - totalEmulatorCycle;
 	totalEmulatorCycle = currentEmulatorCycleV;
 }
+
+void GTUOS::roundRobinAlgorithm(CPU8080 &cpu) {
+    //TODO: get process
+
+        quantumOSCycle += getNumOfSystemCalls() + getCurrentEmulatorCycle();
+
+        //initilize the working process
+        processTable.getProcessByID(processTable.getWorkingPID()).setChipRegisters(*cpu.state);
+
+        ProcessTableEntry currentProcess = processTable.getNextProcess();
+
+        if(quantumOSCycle >= 100) {
+            processTable.setWorkingPID(currentProcess.getPID());
+
+            //TODO : SWTCH pid
+            processTable.removeTheProcess(currentProcess);
+            memory->setBaseRegister(currentProcess.getBaseRegister());
+            memory->setLimitRegister(currentProcess.getLimitRegister());
+
+            *cpu.state = currentProcess.getChipRegisters();
+
+            processTable.addProcess(currentProcess);
+
+            printf("SWITCH  %d,\n", currentProcess.getPID());
+            quantumOSCycle = 0;
+        }
+
+        if(cpu.isHalted()){
+            processTable.removeTheProcess(currentProcess);
+        }
+
+
+
+    /*
+
+        ProcessTableEntry workingProcess = processTable.getNextProcess();
+
+        *cpu.state = workingProcess.getChipRegisters();
+
+        cpu.state->pc = (uint16_t) workingProcess.getBaseRegister();
+        memory->setBaseRegister(workingProcess.getBaseRegister());
+        memory->setLimitRegister(workingProcess.getLimitRegister());
+      //  workingProcess.printProcessEntry();
+
+        processTable.removeTheProcess(workingProcess);
+        processTable.setWorkingPID(workingProcess.getPID());
+        processTable.addProcess(workingProcess);
+
+
+        if(cpu.isHalted()){
+            cout << "HALTED \n"<<endl;
+            processTable.removeTheProcess(workingProcess);
+            exit(0);
+        }
+    */
+
+
+   // cout <<processTable.getWorkingPID()<<endl;
+}
+
 
 
 

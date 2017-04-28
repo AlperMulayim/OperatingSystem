@@ -51,7 +51,7 @@ class ProcessTableEntry {
 
         void setThePhysicalAdress(int thePhysicalAdressV);
 
-        State8080 getChipRegisters() const;
+        State8080& getChipRegisters() ;
 
         void setChipRegisters(State8080 chipRegistersV);
 

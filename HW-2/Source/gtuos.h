@@ -11,7 +11,7 @@ using namespace std;
 class GTUOS{
 
 public:
-	GTUOS(string fileName,OSMemory *mainMemory);
+	GTUOS(string fileName,OSMemory *mainMemory,CPU8080 &cpu);
 	uint64_t handleCall(CPU8080 & cpu);
 	void PRINT_B(const CPU8080 &cpu);
 	void PRINT_MEM(const CPU8080 &cpu);
@@ -29,6 +29,8 @@ public:
 	void setTotalEmulatorCycle(int totalEmulatorCycle);
 	int getCurrentEmulatorCycle() const;
 	void setCurrentEmulatorCycle(int currentEmulatorCycle);
+    void roundRobinAlgorithm(CPU8080 &cpu);
+
 
 	ProcessTable processTable = ProcessTable(20);
 	OSMemory *memory;
@@ -37,6 +39,7 @@ private:
 	int currentEmulatorCycle = 0;
 	int cycleOfSystemCall = 0;
 	int totalEmulatorCycle = 0;
+    int quantumOSCycle = 0;
 
 };
 
