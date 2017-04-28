@@ -11,6 +11,55 @@
 
 using namespace std;
 class ProcessTableEntry {
+
+    public:
+        ProcessTableEntry(string filename);
+
+        const string &getFilename() const;
+
+        void setFilename(const string &filename);
+
+        int getPID() const;
+
+        void setPID(int PIDV);
+
+        int getParentPID() const;
+
+        void setParentPID(int parentPIDV);
+
+        int getBaseRegister() const;
+
+        void setBaseRegister(int baseRegisterV);
+
+        int getLimitRegister() const;
+
+        void setLimitRegister(int limitRegisterV);
+
+        int getStartCycle() const;
+
+        void setStartCycle(int startCycleV);
+
+        int getProcessCycle() const;
+
+        void setProcessCycle(int processCycleV);
+
+        int getStateOfProcess() const;
+
+        void setStateOfProcess(int stateOfProcessV);
+
+        int getThePhysicalAdress() const;
+
+        void setThePhysicalAdress(int thePhysicalAdressV);
+
+        State8080 getChipRegisters() const;
+
+        void setChipRegisters(State8080 chipRegistersV);
+
+        void printProcessEntry();
+
+
+
+
     private:
         string filename;
         int PID;
@@ -21,52 +70,7 @@ class ProcessTableEntry {
         int processCycle;
         int stateOfProcess;
         int thePhysicalAdress;
-        State8080 *chipRegisters;
-public :
-    ProcessTableEntry(string filename);
+        State8080 chipRegisters;
 
-    const string &getFilename() const;
-
-    void setFilename(const string &filename);
-
-    int getPID() const;
-
-    void setPID(int PIDV);
-
-    int getParentPID() const;
-
-    void setParentPID(int parentPIDV);
-
-    int getBaseRegister() const;
-
-    void setBaseRegister(int baseRegisterV);
-
-    int getLimitRegister() const;
-
-    void setLimitRegister(int limitRegisterV);
-
-    int getStartCycle() const;
-
-    void setStartCycle(int startCycleV);
-
-    int getProcessCycle() const;
-
-    void setProcessCycle(int processCycleV);
-
-    int getStateOfProcess() const;
-
-    void setStateOfProcess(int stateOfProcessV);
-
-    int getThePhysicalAdress() const;
-
-    void setThePhysicalAdress(int thePhysicalAdressV);
-
-    State8080* getChipRegisters() const;
-
-    void setChipRegisters(State8080 *chipRegistersV);
-
-    void printProcessEntry();
 };
-
-
 #endif //GTUOSPROCESS_PROCESSTABLEENTRY_H

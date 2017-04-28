@@ -9,6 +9,7 @@
 
 using namespace std;
 class GTUOS{
+
 public:
 	GTUOS(string fileName,OSMemory *mainMemory);
 	uint64_t handleCall( CPU8080 & cpu);
@@ -26,6 +27,8 @@ public:
     void copyMemory(const CPU8080 &cpu,uint32_t startAdr,uint32_t limitStartAddr, uint32_t endAdr);
 	ProcessTable processTable = ProcessTable(20);
     OSMemory *memory;
+
+
 private:
 	int cycleOfSystemCall = 0;
 

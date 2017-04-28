@@ -10,12 +10,7 @@
 #include "processTableEntry.h"
 
 class ProcessTable {
-    private:
-        vector<ProcessTableEntry> processList;
-        int givenPID;
-        int workingPID;
-        int givenLimitRegister;
-        int givenBaseRegister;
+
 public:
         ProcessTable(int givenPID);
         int getWorkingPID() const;
@@ -31,8 +26,16 @@ public:
         int getNumOfProcess();
         int isInTable(ProcessTableEntry process);
         int generatePID();
-        ProcessTableEntry getProcessByID(int pid);
+        ProcessTableEntry &getProcessByID(int pid);
         void printProcessTable();
+
+ private:
+        vector<ProcessTableEntry> processList;
+        int givenPID;
+        int workingPID;
+        int givenLimitRegister;
+        int givenBaseRegister;
+
 };
 
 

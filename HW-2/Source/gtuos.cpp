@@ -22,7 +22,7 @@ GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
 	process.setStateOfProcess(1);
 	process.setProcessCycle(0);
 	process.setThePhysicalAdress(0);
-	State8080 *state8080;
+	State8080 state8080;
 	process.setChipRegisters(state8080);
 
 	//process.printProcessEntry();
@@ -199,17 +199,17 @@ void GTUOS::FORK(const CPU8080 &cpu) {
     newProc.setLimitRegister(processTable.getGivenLimitRegister());
     newProc.setProcessCycle(30);
     newProc.setStartCycle(getNumOfSystemCalls());
-    State8080 *state8080 = currentProc.getChipRegisters();
+    State8080 state8080 = currentProc.getChipRegisters();
     newProc.setStateOfProcess(6);
     newProc.setThePhysicalAdress(newProc.getBaseRegister());
 
     //set parent B;
-    state8080->b = (uint8_t) newProc.getPID();
+    state8080.b = (uint8_t) newProc.getPID();
     processTable.getProcessByID(newProc.getParentPID()).setChipRegisters(state8080);
 
     //set child B;
-    State8080 *state80801 = state8080;
-    state80801->b = 0;
+    State8080 state80801 = state8080;
+    state80801.b = 0;
     newProc.setChipRegisters(state80801);
 
 
@@ -260,7 +260,8 @@ void GTUOS::EXEC( CPU8080 &cpu) {
    // cout <<"FILENAME : "<<name<<processTable.getWorkingPID();
 
 
-    processTable.getProcessByID(processTable.getWorkingPID()).setFilename(fileName);
+    processTable.getProcessByID(processTable.getWorkingPID()).setFilename(name);
+    
 
 
 }

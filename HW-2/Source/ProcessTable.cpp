@@ -63,16 +63,14 @@ int ProcessTable::generatePID() {
     return givenPID;
 }
 
-ProcessTableEntry ProcessTable::getProcessByID(int pid) {
+ProcessTableEntry &ProcessTable::getProcessByID(int pid) {
 
-    ProcessTableEntry proc("NOT PROCESS");
-    proc.setPID(-1);
     for(int i = 0 ; i< processList.size(); ++i){
         if(processList[i].getPID() == pid){
             return processList[i];
         }
     }
-    return  proc;
+
 }
 
 void ProcessTable::printProcessTable() {
