@@ -1,7 +1,7 @@
 #ifndef H_OSMemory
 #define H_OSMemory
 
-#include "MemoryBase.h"
+#include "memoryBase.h"
 #include <iostream>
 
 using namespace std;
