@@ -10,6 +10,9 @@ using namespace std;
 
 GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
 
+
+	setTotalEmulatorCycle(0);
+	setCurrentEmulatorCycle(0);
 	memory = mainMemory;
 	ProcessTableEntry process(fileName);
 
@@ -37,7 +40,7 @@ GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
 
  }
 
-uint64_t GTUOS::handleCall( CPU8080 & cpu){
+uint64_t GTUOS::handleCall(CPU8080 & cpu){
 
 	if(cpu.state->a == 1){
 		PRINT_B(cpu);
@@ -261,8 +264,8 @@ void GTUOS::EXEC( CPU8080 &cpu) {
 
 
     processTable.getProcessByID(processTable.getWorkingPID()).setFilename(name);
-    
 
+	cycleOfSystemCall += 80;
 
 }
 
@@ -272,6 +275,27 @@ void GTUOS::WAITPID(const CPU8080 &cpu) {
     cycleOfSystemCall += 80;
 
 }
+
+int GTUOS::getTotalEmulatorCycle() const {
+	return totalEmulatorCycle;
+}
+
+void GTUOS::setTotalEmulatorCycle(int totalEmulatorCycleV) {
+	totalEmulatorCycle = totalEmulatorCycleV;
+}
+
+int GTUOS::getCurrentEmulatorCycle() const {
+	return currentEmulatorCycle;
+}
+
+void GTUOS::setCurrentEmulatorCycle(int currentEmulatorCycleV) {
+	currentEmulatorCycle = currentEmulatorCycleV - totalEmulatorCycle;
+	totalEmulatorCycle = currentEmulatorCycleV;
+}
+
+
+
+
 
 
 
