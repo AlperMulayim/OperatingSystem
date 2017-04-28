@@ -20,8 +20,10 @@ GTUOS::GTUOS(string fileName,OSMemory *mainMemory) {
 	process.setParentPID(0);
 	process.setPID(processTable.generatePID());
 	process.setBaseRegister(0);
+
+    cout <<"EMULATOR in GTUOS : "<<getTotalEmulatorCycle() << "sys" << cycleOfSystemCall <<endl;
+    process.setStartCycle(getTotalEmulatorCycle() + cycleOfSystemCall);
 	process.setLimitRegister(0x4000);
-	process.setStartCycle(0);
 	process.setStateOfProcess(1);
 	process.setProcessCycle(0);
 	process.setThePhysicalAdress(0);
@@ -216,6 +218,8 @@ void GTUOS::FORK(const CPU8080 &cpu) {
     newProc.setChipRegisters(state80801);
 
 
+    newProc.setStartCycle(getTotalEmulatorCycle() + cycleOfSystemCall);
+    cout <<"EMULATOR in FORK : "<<getTotalEmulatorCycle() << "sys : " << cycleOfSystemCall <<endl;
     processTable.addProcess(newProc);
 
     processTable.setWorkingPID(newProc.getPID());
@@ -223,6 +227,8 @@ void GTUOS::FORK(const CPU8080 &cpu) {
     copyMemory(cpu, (uint32_t) currentProc.getBaseRegister(), (uint32_t) currentProc.getLimitRegister(),
                (uint32_t) newProc.getBaseRegister());
     cycleOfSystemCall += 50;
+
+    //TODO: Gercek CPUya schedularda eklenecek state
 }
 
 void GTUOS::copyMemory(const CPU8080 &cpu,uint32_t startAdr,uint32_t startLimitAdr, uint32_t endAdr) {
