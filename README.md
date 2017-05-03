@@ -27,5 +27,8 @@ DEBUGMODE :
 #### ./GTUOS file.com  DEBUGMODE
 DEBUGMODE :
 <br/> 3 . Information about each process is printed to screen when a process switch occurs , This information will be very similar to "ps -ef" commmand in Unix systems. It will include the process name and all of the process table entry.
+![3](https://cloud.githubusercontent.com/assets/12942688/25656452/ba03aaa0-3001-11e7-9b8d-1fdc63b94a4c.PNG)
+![1](https://cloud.githubusercontent.com/assets/12942688/25656453/ba225ec8-3001-11e7-9422-336ca99bea82.PNG)
+![2](https://cloud.githubusercontent.com/assets/12942688/25656454/ba5f08dc-3001-11e7-950d-9f9ec62b1272.PNG)
 
 
