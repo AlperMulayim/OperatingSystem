@@ -1,6 +1,6 @@
         ; 8080 assembler code
-        .hexfile exec.hex
-        .binfile exec.com
+        .hexfile sum.hex
+        .binfile sum.com
         ; try "hex" for downloading in hex format
         .download bin  
         .objcopy gobjcopy
@@ -53,7 +53,5 @@ begin:
 	MVI A, PRINT_STR	; store the OS call code to A
 	call GTU_OS	; call the OS
 
-	MVI A,EXEC
-	call GTU_OS;
-
+	
 	hlt		; end program
