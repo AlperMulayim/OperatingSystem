@@ -32,3 +32,9 @@ DEBUGMODE :
 ![2](https://cloud.githubusercontent.com/assets/12942688/25656454/ba5f08dc-3001-11e7-950d-9f9ec62b1272.PNG)
 
 Please examine the ASM files for using Operating System Calls.
+
+<BR/>
+
+MIT License
+
+Copyright (c) 2017 Alper Mülayim
